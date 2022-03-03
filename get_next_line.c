@@ -13,24 +13,24 @@
 #include "get_next_line_utils.c"
 #include "get_next_line.h"
 
-char    *ft_read_line(int fd, char *s_remain)
+char    *ft_read_all(int fd, char *s_remain)
 {
     char *buff;
     int read_bytes;
 
-    buff = malloc((*s_remain) * (BUFFER_SIZE + 1));
+    buff = malloc((*buff) * (BUFFER_SIZE + 1));
     if (!buff)
         return (NULL);
     read_bytes = 1;
     while(!ft_strchr(s_remain, '\n') && read_bytes != 0)
     {
         read_bytes = read(fd, buff, BUFFER_SIZE);
-        if (read_bytes = -1)    // if error frees buff
+        if (read_bytes = -1)
         {
             free(buff);
             return (NULL);
         }
-        buff[read_bytes] = '\0'; // used to end the string
+        buff[read_bytes] = '\0';
         s_remain = strjoin(s_remain, buff);
     }
     free(buff);
@@ -88,10 +88,10 @@ char *get_next_line(int fd)
 
     if (fd < 0 || BUFFER_SIZE < 1)
         return (0);
-    s_remain = ft_read_line(fd, s_remain);
+    s_remain = ft_read_all(fd, s_remain);
     if (!s_remain)
         return (NULL);
-    line = ft_get_line(left_str);
+    line = ft_get_line(s_remain);
     s_remain = ft_remainder(s_remain);
     return (line);
 }
