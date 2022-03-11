@@ -6,11 +6,10 @@
 /*   By: jting <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/24 15:20:53 by jting             #+#    #+#             */
-/*   Updated: 2022/03/04 17:09:12 by jting            ###   ########.fr       */
+/*   Updated: 2022/03/09 10:29:34 by jting            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "get_next_line.h"
 
 char	*ft_read_all(int fd, char *s_remain)
@@ -81,9 +80,9 @@ char	*ft_remainder(char *s_remain)
 	if (!str)
 		return (NULL);
 	i++;
-	j = -1;
-	while (s_remain[i])
-		str[++j] = s_remain[i++];
+	j = 0;
+	while (s_remain[i] != '\0')
+		str[j++] = s_remain[i++];
 	str[j] = '\0';
 	free (s_remain);
 	return (str);
@@ -95,7 +94,7 @@ char	*get_next_line(int fd)
 	static char	*s_remain;
 
 	if (fd < 0 || BUFFER_SIZE < 1)
-		return (NULL);
+		return (0);
 	s_remain = ft_read_all(fd, s_remain);
 	if (!s_remain)
 		return (NULL);
